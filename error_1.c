@@ -1,37 +1,40 @@
 #include "monty.h"
 
+
 /**
- * stderr_usage - Prints usage error message.
+ * stderr_usage - usage error.
+ * Return: EXIT_FAILURE
  */
 void stderr_usage(void)
 {
 	fprintf(stderr, "USAGE: monty file\n");
 	exit(EXIT_FAILURE);
 }
-
 /**
- * stderr_malloc - Prints malloc error message.
+ * stderr_malloc - Prints malloc error messages.
+ * Return: EXIT_FAILURE
  */
+
 void stderr_malloc(void)
 {
 	fprintf(stderr, "Error: malloc failed\n");
 	free_globalvars();
 	exit(EXIT_FAILURE);
 }
-
 /**
- * stderr_fopen - Prints fopen error message.
- * @filename: The filename that failed to open.
+ * stderr_fopen - error of fopen.
+ * @filename: type pointer char of filename
+ * Return: EXIT_FAILURE
  */
 void stderr_fopen(char *filename)
 {
 	fprintf(stderr, "Error: Can't open file %s\n", filename);
 	exit(EXIT_FAILURE);
 }
-
 /**
- * stderr_int - Prints error message for invalid integer argument.
- * @line_number: The line number where the error occurred.
+ * stderr_int - error of int.
+ * @line_number: type pointer of line number
+ * Return: EXIT_FAILURE
  */
 void stderr_int(unsigned int line_number)
 {
@@ -41,9 +44,10 @@ void stderr_int(unsigned int line_number)
 }
 
 /**
- * stderr_unknown - Prints error message for unknown instruction.
- * @token: The unknown instruction token.
- * @line_number: The line number where the error occurred.
+ * stderr_unknown - unknown error messagess.
+ * @line_number: line number of the instruction.
+ * @token: type pointer char of the instruction.
+ * Return: EXIT_FAILURE
  */
 void stderr_unknown(char *token, unsigned int line_number)
 {
