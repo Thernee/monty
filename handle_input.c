@@ -1,5 +1,7 @@
 #include "monty.h"
 
+
+extern global_vars glob_vars;
 /**
  * get_input - gets input from the monty file and processes it
  *
@@ -86,7 +88,7 @@ char *line_split(char *input, int count)
  * @command: The opcode
  * Return: Appropriate function to handle opcode
  */
-exect_func call_func(char *command)
+exect_instruct call_func(char *command)
 {
 	int curr = 0;
 
