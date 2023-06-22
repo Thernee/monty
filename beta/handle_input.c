@@ -59,10 +59,10 @@ char *line_split(char *input, int count)
 
 	command = strtok(input, "\n");
 	if (command == NULL)
-		return NULL;
+		return (NULL);
 
 	if (strcmp(command, "push") != 0)
-		return command;
+		return (command);
 
 	arg = strtok(NULL, "\n ");
 
@@ -80,7 +80,7 @@ char *line_split(char *input, int count)
 		exit(EXIT_FAILURE);
 	}
 
-	return command;
+	return (command);
 }
 
 /**
@@ -125,14 +125,15 @@ exect_instruct call_func(char *command)
 int check_num(char *str)
 {
 	char *endptr;
-    if (str == NULL)
-        return (0);
 
-    strtol(str, &endptr, 10);
+	if (str == NULL)
+		return (0);
 
-    if (*endptr == '\0')
-        return (1);
+	strtol(str, &endptr, 10);
 
-    return (0);
+	if (*endptr == '\0')
+		return (1);
+
+	return (0);
 }
 
