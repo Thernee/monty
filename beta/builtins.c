@@ -126,7 +126,10 @@ void add(stack_t **stack, unsigned int line_number)
 	{
 		holder = head->next;
 		holder->n += head->n;
+		if (holder->next)
+			holder->next->prev = holder;
 		free(head);
 		*stack = holder;
 	}
 }
+
