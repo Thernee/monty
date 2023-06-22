@@ -72,7 +72,7 @@ char *line_split(char *input, int count)
 
 	else if (strcmp(command, "push") == 0)
 	{
-		arg = strtok(NULL, "\n");
+		arg = strtok(NULL, " ");
 
 		if (check_num(arg) && arg != NULL)
 			glob_vars->op_args = atoi(arg);

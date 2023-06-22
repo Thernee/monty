@@ -29,9 +29,9 @@ void pall(stack_t **stack, unsigned int line_number)
 void push(stack_t **stack, unsigned int line_number)
 {
 	global_vars *glob_vars = get_global_vars_instance();
-	stack_t *new, *head = *stack;
+	stack_t *new, *head;
 
-	if (stack == NULL)
+	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: usage: push integer", line_number);
 		exit(EXIT_FAILURE);
@@ -42,13 +42,14 @@ void push(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
+	head = *stack;
 	new->prev = NULL;
 	new->n = glob_vars->op_args;
 	new->next = *stack;
 	if (*stack)
 		head->prev = new;
 	*stack = new;
-	cleanup_global_vars();
+	/*cleanup_global_vars();*/
 }
 
 /**
