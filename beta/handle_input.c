@@ -25,6 +25,7 @@ void get_input(stack_t **stack, char *filename)
 	while (getline(&glob_vars.buffer, &n, glob_vars.file) != -1)
 	{
 		input = line_split(glob_vars.buffer, count);
+		printf("This is the input %s", input);
 		if (input == NULL || input[0] == '#')
 		{
 			count++;
@@ -58,7 +59,7 @@ char *line_split(char *input, int count)
 {
 	char *command, *arg, *temp;
 
-	command = strtok(input, "\n");
+	command = strtok(input, "\n ");
 	if (command == NULL)
 		return (NULL);
 
