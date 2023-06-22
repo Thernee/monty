@@ -7,9 +7,12 @@
  * @line_number: The line number of opcode
  * Return: nothing
  */
+
 void pstr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *holder;
+	char str[1024] = {0};
+	int i = 0, j;
 	(void)line_number;
 
 	holder = *stack;
@@ -20,11 +23,18 @@ void pstr(stack_t **stack, unsigned int line_number)
 		return;
 	}
 
-	while (holder->n > 0 && holder->n < 128 && holder)
+	while (holder != NULL && holder->n > 0 && holder->n < 128)
 	{
-		printf("%c", holder->n);
+		str[i] = (char)(holder->n);
 		holder = holder->next;
+		i++;
 	}
+
+	for (j = 0; j < i; j++)
+	{
+		printf("%c", str[j]);
+	}
+
 	printf("\n");
 }
 
