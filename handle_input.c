@@ -74,6 +74,7 @@ char *line_split(char *input, int count)
 		else
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", count);
+			free(glob_vars.buffer);
 			exit(EXIT_FAILURE);
 		}
 	}
