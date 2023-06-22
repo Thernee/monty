@@ -110,7 +110,6 @@ void mod(stack_t **stack, unsigned int line_number)
 		free(glob_vars->buffer);
 		fclose(glob_vars->file);
 		free_dlistint(*stack);
-		cleanup_global_vars();
 		exit(EXIT_FAILURE);
 	}
 	else if ((*stack)->n == 0)
@@ -119,7 +118,6 @@ void mod(stack_t **stack, unsigned int line_number)
 		free(glob_vars->buffer);
 		fclose(glob_vars->file);
 		free_dlistint(*stack);
-		cleanup_global_vars();
 		exit(EXIT_FAILURE);
 	}
 	else
