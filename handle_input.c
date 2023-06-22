@@ -1,7 +1,5 @@
 #include "monty.h"
 
-
-extern global_vars glob_vars;
 /**
  * get_input - gets input from the monty file and processes it
  *
@@ -16,17 +14,18 @@ void get_input(stack_t **stack, char *filename)
 	exect_instruct fptr;
 	char *input;
 	int count = 1;
+	global_vars *glob_vars = get_global_vars_instance();
 
-	glob_vars.file = fopen(filename, "r");
-	if (glob_vars.file == NULL)
+	glob_vars->file = fopen(filename, "r");
+	if (glob_vars->file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
 
-	while (getline(&glob_vars.buffer, &n, glob_vars.file) != -1)
+	while (getline(&glob_vars->buffer, &n, glob_vars->file) != -1)
 	{
-		input = line_split(glob_vars.buffer, count);
+		input = line_split(glob_vars->buffer, count);
 		if (input == NULL || input[0] == '#')
 		{
 			count++;
@@ -42,10 +41,14 @@ void get_input(stack_t **stack, char *filename)
 		fptr(stack, count);
 		count++;
 	}
-	free(glob_vars.buffer);
 
-	if (fclose(glob_vars.file) == -1)
+	if (fclose(glob_vars->file) == -1)
+	{
+		cleanup_global_vars();
 		exit(-1);
+	}
+	else
+		cleanup_global_vars();
 }
 
 /**
@@ -57,6 +60,7 @@ void get_input(stack_t **stack, char *filename)
  */
 char *line_split(char *input, int count)
 {
+	global_vars *glob_vars = get_global_vars_instance();
 	char *command, *arg;
 
 	command = strtok(input, "\n");
@@ -71,7 +75,7 @@ char *line_split(char *input, int count)
 		arg = strtok(NULL, "\n");
 
 		if (check_num(arg) && arg != NULL)
-			glob_vars.op_args = atoi(arg);
+			glob_vars->op_args = atoi(arg);
 
 		else
 		{
@@ -79,6 +83,7 @@ char *line_split(char *input, int count)
 			exit(EXIT_FAILURE);
 		}
 	}
+	cleanup_global_vars();
 	return (command);
 }
 

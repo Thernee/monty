@@ -3,7 +3,7 @@
 /**
  * pall - Prints values on the stack
  * @stack: pointer to head of stack
- * @line_numer: line number of opcode
+ * @line_number: line number of opcode
  * Return: nothing
  */
 
@@ -23,12 +23,12 @@ void pall(stack_t **stack, unsigned int line_number)
  * push - Pushes an element to the stack
  * @stack: pointer to head of stack
  * @line_number:  line number of opcode
- * @n: variable
  * Return: address of new element
  */
 
 void push(stack_t **stack, unsigned int line_number)
 {
+	global_vars *glob_vars = get_global_vars_instance();
 	stack_t *new, *head = *stack;
 
 	if (stack == NULL)
@@ -43,11 +43,12 @@ void push(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	new->prev = NULL;
-	new->n = glob_vars.op_args;
+	new->n = glob_vars->op_args;
 	new->next = *stack;
 	if (*stack)
 		head->prev = new;
 	*stack = new;
+	cleanup_global_vars();
 }
 
 /**
