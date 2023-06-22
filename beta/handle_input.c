@@ -45,8 +45,10 @@ void get_input(stack_t **stack, char *filename)
 	free(glob_vars->buffer);
 
 	if (fclose(glob_vars->file) == -1)
+	{
 		cleanupGlobals();
 		exit(-1);
+	}
 }
 
 /**
