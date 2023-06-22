@@ -106,6 +106,8 @@ exect_instruct call_func(char *command)
 		{"add", add},
 		{"pstr", pstr},
 		{"pchar", pchar},
+		{"rotr", rotr},
+		{"rotl", rotl},
 		{"nop", nop},
 		{NULL, NULL},
 	};

@@ -1,5 +1,32 @@
 #include "monty.h"
 
+#include "monty.h"
+/**
+ *rotr- rotates stack a stack from top to bottom
+ *@stack: pointer to stack
+ *@line_number: line number of opcode
+ *Return: nothing
+ */
+void rotr(stack_t **stack, unsigned int line_number)
+{
+	stack_t *holder;
+	(void)line_number;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+		return;
+
+	holder = *stack;
+	while (holder->next)
+	{
+		holder = holder->next;
+	}
+	holder->next = *stack;
+	holder->prev->next = NULL;
+	holder->prev = NULL;
+	(*stack)->prev = holder;
+	(*stack) = holder;
+}
+
 /**
  * pstr - prints all the values of the stack as string
  *
@@ -74,7 +101,7 @@ void pchar(stack_t **stack, unsigned int line_number)
 #include "monty.h"
 /**
  * rotl- rotates 1st elem to bottom, second-last to top
- *@head: pointer to stack
+ *@stack: pointer to stack
  *@line_number: opcode line number
  *Return: nothing
  */
