@@ -35,6 +35,7 @@ void get_input(stack_t **stack, char *filename)
 		if (fptr == NULL)
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", count, input);
+			free(glob_vars.buffer);
 			exit(EXIT_FAILURE);
 		}
 		fptr(stack, count);
@@ -56,16 +57,17 @@ void get_input(stack_t **stack, char *filename)
  */
 char *line_split(char *input, int count)
 {
-	char *command, *arg;
+	char *command, *arg, *temp;
 
 	command = strtok(input, "\n");
 	if (command == NULL)
 		return (NULL);
 
-	if (strcmp(command, "push") != 0)
+	temp = "push";
+	if (strcmp(command, temp) == 0)
 	{
 		arg = strtok(NULL, "\n ");
-		if (arg != NULL && check_num(arg))
+		if (arg != NULL && check_num(arg) == 1)
 		{
 			glob_vars.op_args = atoi(arg);
 		}
