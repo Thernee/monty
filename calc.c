@@ -10,7 +10,6 @@ void mul(stack_t **stack, unsigned int line_number)
 {
 	int holder;
 	stack_t *temp;
-	global_vars *glob_vars = get_global_vars_instance();
 
 	temp = *stack;
 
@@ -20,7 +19,6 @@ void mul(stack_t **stack, unsigned int line_number)
 		free(glob_vars->buffer);
 		fclose(glob_vars->file);
 		free_dlistint(temp);
-		cleanup_global_vars();
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -71,7 +69,6 @@ void sub(stack_t **stack, unsigned int line_number)
  */
 void _div(stack_t **stack, unsigned int line_number)
 {
-	global_vars *glob_vars = get_global_vars_instance();
 	int total = 0;
 
 	if (*stack == NULL || (*stack)->next == NULL)
@@ -80,7 +77,6 @@ void _div(stack_t **stack, unsigned int line_number)
 		free(glob_vars->buffer);
 		fclose(glob_vars->file);
 		free_dlistint(*stack);
-		cleanup_global_vars();
 		exit(EXIT_FAILURE);
 	}
 	else if ((*stack)->n == 0)
@@ -89,7 +85,6 @@ void _div(stack_t **stack, unsigned int line_number)
 		free(glob_vars->buffer);
 		fclose(glob_vars->file);
 		free_dlistint(*stack);
-		cleanup_global_vars();
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -107,7 +102,6 @@ void _div(stack_t **stack, unsigned int line_number)
  */
 void mod(stack_t **stack, unsigned int line_number)
 {
-	global_vars *glob_vars = get_global_vars_instance();
 	int mod = 0;
 
 	if (*stack == NULL || (*stack)->next == NULL)
@@ -116,7 +110,6 @@ void mod(stack_t **stack, unsigned int line_number)
 		free(glob_vars->buffer);
 		fclose(glob_vars->file);
 		free_dlistint(*stack);
-		cleanup_global_vars();
 		exit(EXIT_FAILURE);
 	}
 	else if ((*stack)->n == 0)
@@ -125,7 +118,6 @@ void mod(stack_t **stack, unsigned int line_number)
 		free(glob_vars->buffer);
 		fclose(glob_vars->file);
 		free_dlistint(*stack);
-		cleanup_global_vars();
 		exit(EXIT_FAILURE);
 	}
 	else

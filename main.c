@@ -1,6 +1,5 @@
 #include "monty.h"
 
-static global_vars *instance;
 /**
  * main - main function for the monty program
  * @argc: total number of arguments
@@ -9,19 +8,22 @@ static global_vars *instance;
  */
 int main(int argc, char **argv)
 {
-	stack_t **stack;
+	stack_t *stack;
 
+	initializeGlobals();
 	stack = NULL;
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
+		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 
-	get_input(stack, argv[1]);
+	get_input(&stack, argv[1]);
 
 
-	free_dlistint(*stack);
+	free_dlistint(stack);
+	cleanupGlobals();
 	return (0);
 }
 
@@ -41,39 +43,5 @@ void free_dlistint(stack_t *head)
 		temp = holder->next;
 		free(holder);
 		holder = temp;
-	}
-}
-
-/**
- * get_global_vars_instance - Retrieves the global_vars instance.
- *
- * This function returns a pointer to the global_vars structure.
- * Return: A pointer to the global_vars instance.
- */
-global_vars *get_global_vars_instance(void)
-{
-	if (instance == NULL)
-	{
-		instance = malloc(sizeof(global_vars));
-		instance->buffer = NULL;
-		instance->file = NULL;
-		instance->op_args = 0;
-	}
-	return (instance);
-}
-/**
- * cleanup_global_vars - Frees the memory allocated for the global_vars
- *
- * This function frees the memory allocated for the global_vars structure.
- * frees any dynamically allocated memory within the structure
- */
-void cleanup_global_vars(void)
-{
-	if (instance != NULL)
-	{
-		free(instance->buffer);
-
-		free(instance);
-		instance = NULL;
 	}
 }

@@ -1,6 +1,5 @@
 #include "monty.h"
 
-
 /**
  * pint - prints integer at the top of stack
  * @stack: pointer to the stack
@@ -15,6 +14,7 @@ void pint(stack_t **stack, unsigned int line_number)
 	if (holder == NULL)
 	{
 		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 	printf("%d\n", holder->n);

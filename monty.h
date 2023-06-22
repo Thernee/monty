@@ -66,8 +66,6 @@ typedef struct global_vars
 
 
 /*EXTERNS*/
-global_vars *get_global_vars_instance(void);
-void cleanup_global_vars(void);
 extern global_vars *glob_vars;
 
 
@@ -78,6 +76,8 @@ char *line_split(char *input, int count);
 exect_instruct call_func(char *command);
 void free_dlistint(stack_t *head);
 int check_num(char *str);
+void initializeGlobals(void);
+void cleanupGlobals(void);
 
 
 void pall(stack_t **stack, unsigned int line_number);

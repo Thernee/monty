@@ -14,12 +14,12 @@ void get_input(stack_t **stack, char *filename)
 	exect_instruct fptr;
 	char *input;
 	int count = 1;
-	global_vars *glob_vars = get_global_vars_instance();
 
 	glob_vars->file = fopen(filename, "r");
 	if (glob_vars->file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
+		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 
@@ -36,7 +36,8 @@ void get_input(stack_t **stack, char *filename)
 		if (fptr == NULL)
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", count, input);
-				exit(EXIT_FAILURE);
+			cleanupGlobals();
+			exit(EXIT_FAILURE);
 		}
 		fptr(stack, count);
 		count++;
@@ -44,11 +45,10 @@ void get_input(stack_t **stack, char *filename)
 
 	if (fclose(glob_vars->file) == -1)
 	{
-		cleanup_global_vars();
+		cleanupGlobals();
 		exit(-1);
 	}
-	else
-		cleanup_global_vars();
+	cleanupGlobals();
 }
 
 /**
@@ -60,7 +60,6 @@ void get_input(stack_t **stack, char *filename)
  */
 char *line_split(char *input, int count)
 {
-	global_vars *glob_vars = get_global_vars_instance();
 	char *command, *arg;
 
 	command = strtok(input, "\n");
@@ -70,20 +69,24 @@ char *line_split(char *input, int count)
 	if (strcmp(command, "push") != 0)
 		return (command);
 
-	else if (strcmp(command, "push") == 0)
+	arg = strtok(NULL, "\n ");
+
+	if (arg == NULL)
 	{
-		arg = strtok(NULL, "\n ");
-
-		if (check_num(arg) && arg != NULL)
-			glob_vars->op_args = atoi(arg);
-
-		else
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", count);
-			exit(EXIT_FAILURE);
-		}
+		fprintf(stderr, "L%d: usage: push integer\n", count);
+		cleanupGlobals();
+		exit(EXIT_FAILURE);
 	}
-	cleanup_global_vars();
+
+	if (check_num(arg))
+		glob_vars->op_args = atoi(arg);
+	else
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", count);
+		cleanupGlobals();
+		exit(EXIT_FAILURE);
+	}
+
 	return (command);
 }
 
@@ -128,23 +131,16 @@ exect_instruct call_func(char *command)
  */
 int check_num(char *str)
 {
-	int counter = 0;
+	char *endptr;
 
 	if (str == NULL)
 		return (0);
 
-	while (str[counter])
-	{
-		if (str[0] == '-')
-		{
-			counter++;
-			continue;
-		}
-		else if (!isdigit(str[counter]))
-			return (0);
+	strtol(str, &endptr, 10);
 
-		counter++;
-	}
+	if (*endptr == '\0')
+		return (1);
 
-	return (1);
+	return (0);
 }
+
