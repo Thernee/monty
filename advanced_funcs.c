@@ -70,3 +70,32 @@ void pchar(stack_t **stack, unsigned int line_number)
 
 	printf("%c\n", holder->n);
 }
+
+#include "monty.h"
+/**
+ * rotl- rotates 1st elem to bottom, second-last to top
+ *@head: pointer to stack
+ *@line_number: opcode line number
+ *Return: nothing
+ */
+void rotl(stack_t **stack, unsigned int line_number)
+{
+	stack_t *holder, *temp;
+	(void)line_number;
+
+
+	if (*stack == NULL || (*stack)->next == NULL)
+		return;
+
+	holder = *stack;
+	temp = (*stack)->next;
+	temp->prev = NULL;
+	while (holder->next != NULL)
+	{
+		holder = holder->next;
+	}
+	holder->next = *stack;
+	(*stack)->next = NULL;
+	(*stack)->prev = holder;
+	(*stack) = temp;
+}
