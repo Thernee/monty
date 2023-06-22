@@ -1,106 +1,36 @@
 #include "monty.h"
 
+
 /**
- * pop - Remove the top element of the stack
- * @stack: Pointer to the head of the linked list
- * @line_number: Line number of the instruction
+ * pint - prints integer at the top of stack
+ * @stack: pointer to the stack
+ * @line_number: line number of opcode
  *
- * Return: No return value
  */
-void pop(stack_t **stack, unsigned int line_number)
+void pint(stack_t **stack, unsigned int line_number)
 {
-	if (stack == NULL || *stack == NULL)
+	stack_t *holder;
+
+	holder = *stack;
+	if (holder == NULL)
 	{
-		pop_e(line_number);
-		return;
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
 	}
-
-	stack_t *temp = *stack;
-	*stack = (*stack)->next;
-
-	if (*stack != NULL)
-		(*stack)->prev = NULL;
-
-	free(temp);
+	printf("%d\n", holder->n);
 }
 
 /**
- * add - Add the top two elements of the stack
- * @stack: Pointer to the head of the linked list
- * @line_number: Line number of the instruction
- *
- * Return: No return value
+ * nop - This does nothing
+ * @stack: pointer to stack
+ * @line_number: line number of opcode
  */
-void add(stack_t **stack, unsigned int line_number)
+
+void nop(stack_t **stack, unsigned int line_number)
 {
-	if (*stack == NULL || (*stack)->next == NULL)
-	{
-		op_e(line_number, "add");
-		return;
-	}
+	(void)stack;
+	(void)line_number;
 
-	(*stack)->next->n += (*stack)->n;
-	pop(stack, line_number);
-}
 
-/**
- * sub - Subtract the top element of the stack from the second top element
- * @stack: Pointer to the head of the linked list
- * @line_number: Line number of the instruction
- *
- * Return: No return value
- */
-void sub(stack_t **stack, unsigned int line_number)
-{
-	if (*stack == NULL || (*stack)->next == NULL)
-	{
-		op_e(line_number, "sub");
-		return;
-	}
-
-	(*stack)->next->n -= (*stack)->n;
-	pop(stack, line_number);
-}
-
-/**
- * mul - Multiply the second element from the top of the stack by the top element
- * @stack: Pointer to the head of the linked list
- * @line_number: Line number of the instruction
- *
- * Return: No return value
- */
-void mul(stack_t **stack, unsigned int line_number)
-{
-	if (*stack == NULL || (*stack)->next == NULL)
-	{
-		op_e(line_number, "mul");
-		return;
-	}
-
-	(*stack)->next->n *= (*stack)->n;
-	pop(stack, line_number);
-}
-
-/**
- * pchar - Print the character value of the top element of the stack
- * @stack: Pointer to the head of the linked list
- * @line_number: Line number of the instruction
- *
- * Return: No return value
- */
-void pchar(stack_t **stack, unsigned int line_number)
-{
-	if (*stack == NULL)
-	{
-		pchar_e(line_number, "stack empty");
-		return;
-	}
-
-	if ((*stack)->n < 0 || (*stack)->n > 127)
-	{
-		pchar_e(line_number, "value out of range");
-		return;
-	}
-
-	printf("%c\n", (*stack)->n);
+	;
 }

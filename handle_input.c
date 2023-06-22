@@ -18,7 +18,7 @@ void get_input(stack_t **stack, char *filename)
 	glob_vars.file = fopen(filename, "r");
 	if (glob_vars.file == NULL)
 	{
-		fprintf(stderr, "Error: Can't open file %s", filename);
+		fprintf(stderr, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
 
@@ -86,7 +86,7 @@ char *line_split(char *input, int count)
  * @command: The opcode
  * Return: Appropriate function to handle opcode
  */
-exect_func call_func(char *command)
+exect_instruct call_func(char *command)
 {
 	int curr = 0;
 
@@ -95,6 +95,10 @@ exect_func call_func(char *command)
 		{"pall", pall},
 		{"pint", pint},
 		{"pop", pop},
+		{"sub", sub},
+		{"mul", mul},
+		{"div", _div},
+		{"mod", mod},
 		{"swap", swap},
 		{"add", add},
 		{"nop", nop},
@@ -115,12 +119,12 @@ exect_func call_func(char *command)
  * @str: The string to be checked
  * Return: True if str is a number, False otherwise
  */
-bool check_num(char *str)
+int check_num(char *str)
 {
 	int counter = 0;
 
 	if (str == NULL)
-		return (false);
+		return (0);
 
 	while (str[counter])
 	{
@@ -130,10 +134,10 @@ bool check_num(char *str)
 			continue;
 		}
 		else if (!isdigit(str[counter]))
-			return (false);
+			return (0);
 
 		counter++;
 	}
 
-	return (true);
+	return (1);
 }

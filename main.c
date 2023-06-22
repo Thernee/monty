@@ -1,5 +1,7 @@
 #include "monty.h"
 
+global_vars glob_vars;
+
 /**
  * main - main function for the monty program
  * @argc: total number of arguments
@@ -8,7 +10,7 @@
  */
 int main(int argc, char **argv)
 {
-	stack_t *stack;
+	stack_t **stack;
 
 	stack = NULL;
 	if (argc != 2)
@@ -20,7 +22,7 @@ int main(int argc, char **argv)
 	get_input(stack, argv[1]);
 
 
-	free_dlistint(stack);
+	free_dlistint(*stack);
 	return (0);
 }
 
