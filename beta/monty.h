@@ -66,7 +66,7 @@ typedef struct global_vars
 
 
 /*EXTERNS*/
-extern global_vars *glob_vars;
+extern global_vars glob_vars;
 
 
 /*FUNCTION PROTOTYPES*/

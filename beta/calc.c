@@ -16,8 +16,8 @@ void mul(stack_t **stack, unsigned int line_number)
 	if (temp == NULL || temp->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't mul, stack too short\n", line_number);
-		free(glob_vars->buffer);
-		fclose(glob_vars->file);
+		free(glob_vars.buffer);
+		fclose(glob_vars.file);
 		free_dlistint(temp);
 		exit(EXIT_FAILURE);
 	}
@@ -74,16 +74,16 @@ void _div(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		fprintf(stderr, "L%u: can't div, stack too short\n", line_number);
-		free(glob_vars->buffer);
-		fclose(glob_vars->file);
+		free(glob_vars.buffer);
+		fclose(glob_vars.file);
 		free_dlistint(*stack);
 		exit(EXIT_FAILURE);
 	}
 	else if ((*stack)->n == 0)
 	{
 		fprintf(stderr, "L%d: division by zero\n", line_number);
-		free(glob_vars->buffer);
-		fclose(glob_vars->file);
+		free(glob_vars.buffer);
+		fclose(glob_vars.file);
 		free_dlistint(*stack);
 		exit(EXIT_FAILURE);
 	}
@@ -107,16 +107,16 @@ void mod(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		fprintf(stderr, "L%u: can't mod, stack too short\n", line_number);
-		free(glob_vars->buffer);
-		fclose(glob_vars->file);
+		free(glob_vars.buffer);
+		fclose(glob_vars.file);
 		free_dlistint(*stack);
 		exit(EXIT_FAILURE);
 	}
 	else if ((*stack)->n == 0)
 	{
 		fprintf(stderr, "L%d: division by zero\n", line_number);
-		free(glob_vars->buffer);
-		fclose(glob_vars->file);
+		free(glob_vars.buffer);
+		fclose(glob_vars.file);
 		free_dlistint(*stack);
 		exit(EXIT_FAILURE);
 	}
