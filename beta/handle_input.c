@@ -63,22 +63,17 @@ char *line_split(char *input, int count)
 		return (NULL);
 
 	if (strcmp(command, "push") != 0)
-		return (command);
-
-	arg = strtok(NULL, "\n ");
-
-	if (arg == NULL)
 	{
-		fprintf(stderr, "L%d: usage: push integer\n", count);
-		exit(EXIT_FAILURE);
-	}
-
-	if (check_num(arg))
-		glob_vars.op_args = atoi(arg);
-	else
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", count);
-		exit(EXIT_FAILURE);
+		arg = strtok(NULL, "\n ");
+		if (arg != NULL && check_num(arg))
+		{
+			glob_vars.op_args = atoi(arg);
+		}
+		else
+		{
+			fprintf(stderr, "L%d: usage: push integer\n", count);
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	return (command);
