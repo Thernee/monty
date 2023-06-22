@@ -1,18 +1,6 @@
 #ifndef MONTY_H
 #define MONTY_H
 
-#define _GNU_SOURCE
-#define _POSIX_C_SOURCE 200809L
-
-/*HEADER FILES*/
-#include <stdio.h>
-#include <stdlib.h>
-#include <stddef.h>
-#include <stdbool.h>
-#include <ctype.h>
-#include <string.h>
-
-
 
 /*STRUCTURE DEFINITIONS*/
 
@@ -31,6 +19,22 @@ typedef struct stack_s
 	struct stack_s *prev;
 	struct stack_s *next;
 } stack_t;
+
+
+#define _GNU_SOURCE
+#define _POSIX_C_SOURCE 200809L
+
+/*HEADER FILES*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <stdbool.h>
+#include <ctype.h>
+#include <string.h>
+
+
+
+/*STRUCTURE DEFINITIONS*/
 
 
 /**
@@ -62,8 +66,9 @@ typedef struct global_vars
 
 
 /*EXTERNS*/
-extern global_vars glob_vars;
-
+global_vars *get_global_vars_instance(void);
+void cleanup_global_vars(void);
+extern global_vars *glob_vars;
 
 
 /*FUNCTION PROTOTYPES*/
@@ -72,7 +77,7 @@ void get_input(stack_t **stack, char *filename);
 char *line_split(char *input, int count);
 exect_instruct call_func(char *command);
 void free_dlistint(stack_t *head);
-bool check_num(char *str);
+int check_num(char *str);
 
 
 void pall(stack_t **stack, unsigned int line_number);
@@ -85,4 +90,13 @@ void rotl(stack_t **stack, unsigned int line_number);
 void rotr(stack_t **stack, unsigned int line_number);
 
 void add(stack_t **stack, unsigned int line_number);
+
+void sub(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
+void mul(stack_t **stack, unsigned int line_number);
+void _div(stack_t **stack, unsigned int line_number);
+void mod(stack_t **stack, unsigned int line_number);
+
+
+
 #endif

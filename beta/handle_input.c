@@ -14,18 +14,17 @@ void get_input(stack_t **stack, char *filename)
 	exect_instruct fptr;
 	char *input;
 	int count = 1;
-	global_vars *glob_vars = get_global_vars_instance();
 
-	glob_vars->file = fopen(filename, "r");
-	if (glob_vars->file == NULL)
+	glob_vars.file = fopen(filename, "r");
+	if (glob_vars.file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
 
-	while (getline(&glob_vars->buffer, &n, glob_vars->file) != -1)
+	while (getline(&glob_vars.buffer, &n, glob_vars.file) != -1)
 	{
-		input = line_split(glob_vars->buffer, count);
+		input = line_split(glob_vars.buffer, count);
 		if (input == NULL || input[0] == '#')
 		{
 			count++;
@@ -36,19 +35,15 @@ void get_input(stack_t **stack, char *filename)
 		if (fptr == NULL)
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", count, input);
-				exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 		fptr(stack, count);
 		count++;
 	}
+	free(glob_vars.buffer);
 
-	if (fclose(glob_vars->file) == -1)
-	{
-		cleanup_global_vars();
+	if (fclose(glob_vars.file) == -1)
 		exit(-1);
-	}
-	else
-		cleanup_global_vars();
 }
 
 /**
@@ -60,31 +55,32 @@ void get_input(stack_t **stack, char *filename)
  */
 char *line_split(char *input, int count)
 {
-	global_vars *glob_vars = get_global_vars_instance();
 	char *command, *arg;
 
 	command = strtok(input, "\n");
 	if (command == NULL)
-		return (NULL);
+		return NULL;
 
 	if (strcmp(command, "push") != 0)
-		return (command);
+		return command;
 
-	else if (strcmp(command, "push") == 0)
+	arg = strtok(NULL, "\n ");
+
+	if (arg == NULL)
 	{
-		arg = strtok(NULL, "\n ");
-
-		if (check_num(arg) && arg != NULL)
-			glob_vars->op_args = atoi(arg);
-
-		else
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", count);
-			exit(EXIT_FAILURE);
-		}
+		fprintf(stderr, "L%d: usage: push integer\n", count);
+		exit(EXIT_FAILURE);
 	}
-	cleanup_global_vars();
-	return (command);
+
+	if (check_num(arg))
+		glob_vars.op_args = atoi(arg);
+	else
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", count);
+		exit(EXIT_FAILURE);
+	}
+
+	return command;
 }
 
 /**
@@ -128,23 +124,15 @@ exect_instruct call_func(char *command)
  */
 int check_num(char *str)
 {
-	int counter = 0;
+	char *endptr;
+    if (str == NULL)
+        return (0);
 
-	if (str == NULL)
-		return (0);
+    strtol(str, &endptr, 10);
 
-	while (str[counter])
-	{
-		if (str[0] == '-')
-		{
-			counter++;
-			continue;
-		}
-		else if (!isdigit(str[counter]))
-			return (0);
+    if (*endptr == '\0')
+        return (1);
 
-		counter++;
-	}
-
-	return (1);
+    return (0);
 }
+
