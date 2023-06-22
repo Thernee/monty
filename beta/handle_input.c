@@ -15,17 +15,17 @@ void get_input(stack_t **stack, char *filename)
 	char *input;
 	int count = 1;
 
-	glob_vars.file = fopen(filename, "r");
-	if (glob_vars.file == NULL)
+	glob_vars->file = fopen(filename, "r");
+	if (glob_vars->file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
+		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 
-	while (getline(&glob_vars.buffer, &n, glob_vars.file) != -1)
+	while (getline(&glob_vars->buffer, &n, glob_vars->file) != -1)
 	{
-		input = line_split(glob_vars.buffer, count);
-		printf("This is the input %s", input);
+		input = line_split(glob_vars->buffer, count);
 		if (input == NULL || input[0] == '#')
 		{
 			count++;
@@ -36,16 +36,19 @@ void get_input(stack_t **stack, char *filename)
 		if (fptr == NULL)
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", count, input);
-			free(glob_vars.buffer);
+			cleanupGlobals();
 			exit(EXIT_FAILURE);
 		}
 		fptr(stack, count);
 		count++;
 	}
-	free(glob_vars.buffer);
 
-	if (fclose(glob_vars.file) == -1)
+	if (fclose(glob_vars->file) == -1)
+	{
+		cleanupGlobals();
 		exit(-1);
+	}
+	cleanupGlobals();
 }
 
 /**
@@ -57,25 +60,31 @@ void get_input(stack_t **stack, char *filename)
  */
 char *line_split(char *input, int count)
 {
-	char *command, *arg, *temp;
+	char *command, *arg;
 
-	command = strtok(input, "\n ");
+	command = strtok(input, "\n");
 	if (command == NULL)
 		return (NULL);
 
-	temp = "push";
-	if (strcmp(command, temp) == 0)
+	if (strcmp(command, "push") != 0)
+		return (command);
+
+	arg = strtok(NULL, "\n ");
+
+	if (arg == NULL)
 	{
-		arg = strtok(NULL, "\n ");
-		if (arg != NULL && check_num(arg) == 1)
-		{
-			glob_vars.op_args = atoi(arg);
-		}
-		else
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", count);
-			exit(EXIT_FAILURE);
-		}
+		fprintf(stderr, "L%d: usage: push integer\n", count);
+		cleanupGlobals();
+		exit(EXIT_FAILURE);
+	}
+
+	if (check_num(arg))
+		glob_vars->op_args = atoi(arg);
+	else
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", count);
+		cleanupGlobals();
+		exit(EXIT_FAILURE);
 	}
 
 	return (command);

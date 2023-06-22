@@ -66,7 +66,7 @@ typedef struct global_vars
 
 
 /*EXTERNS*/
-extern global_vars glob_vars;
+extern global_vars *glob_vars;
 
 
 /*FUNCTION PROTOTYPES*/
@@ -77,7 +77,7 @@ exect_instruct call_func(char *command);
 void free_dlistint(stack_t *head);
 int check_num(char *str);
 void initializeGlobals(void);
-/*void cleanupGlobals(void);*/
+void cleanupGlobals(void);
 
 
 void pall(stack_t **stack, unsigned int line_number);

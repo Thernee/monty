@@ -33,19 +33,17 @@ void push(stack_t **stack, unsigned int line_number)
 	if (stack == NULL)
 	{
 		fprintf(stderr, "L%d: usage: push integer", line_number);
-		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 	head = *stack;
 	new_node->prev = NULL;
-	new_node->n = glob_vars->op_args;
+	new_node->n = glob_vars.op_args;
 	new_node->next = *stack;
 	if (head != NULL)
 		head->prev = new_node;
@@ -66,7 +64,6 @@ void pop(stack_t **stack, unsigned int line_number)
 	if (!(*stack))
 	{
 		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
-		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 
@@ -93,7 +90,6 @@ void swap(stack_t **stack, unsigned int line_number)
 	if ((*stack) == NULL || (*stack)->next == NULL)
 	{
 		fprintf(stderr, "L%u: can't swap, stack too short\n", line_number);
-		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 
@@ -123,7 +119,6 @@ void add(stack_t **stack, unsigned int line_number)
 	if ((*stack) == NULL || (*stack)->next == NULL)
 	{
 		fprintf(stderr, "L%u: can't add, stack too short\n", line_number);
-		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 
