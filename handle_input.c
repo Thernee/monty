@@ -36,6 +36,7 @@ void get_input(stack_t **stack, char *filename)
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", count, input);
 			free(glob_vars.buffer);
+			fclose(glob_vars.file);
 			exit(EXIT_FAILURE);
 		}
 		fptr(stack, count);
