@@ -43,7 +43,7 @@ void push(stack_t **stack, unsigned int line_number)
 	}
 	head = *stack;
 	new_node->prev = NULL;
-	new_node->n = glob_vars.op_args;
+	new_node->n = glob_vars->op_args;
 	new_node->next = *stack;
 	if (*stack != NULL)
 		(*stack)->prev = new_node;

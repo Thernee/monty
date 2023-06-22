@@ -76,6 +76,8 @@ char *line_split(char *input, int count);
 exect_instruct call_func(char *command);
 void free_dlistint(stack_t *head);
 int check_num(char *str);
+void initializeGlobals(void);
+void cleanupGlobals(void);
 
 
 void pall(stack_t **stack, unsigned int line_number);

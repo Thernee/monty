@@ -16,7 +16,7 @@ void get_input(stack_t **stack, char *filename)
 	int count = 1;
 
 	glob_vars->file = fopen(filename, "r");
-	if (glob_vars.file == NULL)
+	if (glob_vars->file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
