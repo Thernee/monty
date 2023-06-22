@@ -42,13 +42,13 @@ void get_input(stack_t **stack, char *filename)
 		fptr(stack, count);
 		count++;
 	}
-	free(glob_vars->buffer);
 
 	if (fclose(glob_vars->file) == -1)
 	{
 		cleanupGlobals();
 		exit(-1);
 	}
+	cleanupGlobals();
 }
 
 /**
