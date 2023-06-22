@@ -104,6 +104,8 @@ exect_instruct call_func(char *command)
 		{"mod", mod},
 		{"swap", swap},
 		{"add", add},
+		{"pstr", pstr},
+		{"pchar", pchar},
 		{"nop", nop},
 		{NULL, NULL},
 	};
