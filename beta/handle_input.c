@@ -72,6 +72,7 @@ char *line_split(char *input, int count)
 	if (arg == NULL)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", count);
+		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 
@@ -80,6 +81,7 @@ char *line_split(char *input, int count)
 	else
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", count);
+		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 
