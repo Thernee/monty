@@ -15,16 +15,16 @@ void get_input(stack_t **stack, char *filename)
 	char *input;
 	int count = 1;
 
-	glob_vars.file = fopen(filename, "r");
+	glob_vars->file = fopen(filename, "r");
 	if (glob_vars.file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
 
-	while (getline(&glob_vars.buffer, &n, glob_vars.file) != -1)
+	while (getline(&glob_vars->buffer, &n, glob_vars->file) != -1)
 	{
-		input = line_split(glob_vars.buffer, count);
+		input = line_split(glob_vars->buffer, count);
 		if (input == NULL || input[0] == '#')
 		{
 			count++;
@@ -40,9 +40,9 @@ void get_input(stack_t **stack, char *filename)
 		fptr(stack, count);
 		count++;
 	}
-	free(glob_vars.buffer);
+	free(glob_vars->buffer);
 
-	if (fclose(glob_vars.file) == -1)
+	if (fclose(glob_vars->file) == -1)
 		exit(-1);
 }
 
@@ -73,7 +73,7 @@ char *line_split(char *input, int count)
 	}
 
 	if (check_num(arg))
-		glob_vars.op_args = atoi(arg);
+		glob_vars->op_args = atoi(arg);
 	else
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", count);
