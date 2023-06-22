@@ -42,6 +42,8 @@ void sub(stack_t **stack, unsigned int line_number)
 	if (temp == NULL)
 	{
 		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
+		free(glob_vars.buffer);
+		fclose(glob_vars.file);
 		exit(EXIT_FAILURE);
 	}
 
@@ -54,6 +56,8 @@ void sub(stack_t **stack, unsigned int line_number)
 	if (stack == NULL || (*stack)->next == NULL || counter <= 1)
 	{
 		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
+		free(glob_vars.buffer);
+		fclose(glob_vars.file);
 		exit(EXIT_FAILURE);
 	}
 	total = (*stack)->next->n - (*stack)->n;

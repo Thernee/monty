@@ -14,6 +14,8 @@ void pint(stack_t **stack, unsigned int line_number)
 	if (holder == NULL)
 	{
 		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		free(glob_vars.buffer);
+		fclose(glob_vars.file);
 		exit(EXIT_FAILURE);
 	}
 	printf("%d\n", holder->n);
