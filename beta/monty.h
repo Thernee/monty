@@ -66,8 +66,6 @@ typedef struct global_vars
 
 
 /*EXTERNS*/
-global_vars *get_global_vars_instance(void);
-void cleanup_global_vars(void);
 extern global_vars *glob_vars;
 
 

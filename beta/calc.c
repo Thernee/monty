@@ -20,7 +20,6 @@ void mul(stack_t **stack, unsigned int line_number)
 		free(glob_vars->buffer);
 		fclose(glob_vars->file);
 		free_dlistint(temp);
-		cleanup_global_vars();
 		exit(EXIT_FAILURE);
 	}
 	else
