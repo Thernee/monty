@@ -19,6 +19,7 @@ void get_input(stack_t **stack, char *filename)
 	if (glob_vars->file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
+		cleanupGlobals();
 		exit(EXIT_FAILURE);
 	}
 
@@ -35,6 +36,7 @@ void get_input(stack_t **stack, char *filename)
 		if (fptr == NULL)
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", count, input);
+			cleanupGlobals();
 			exit(EXIT_FAILURE);
 		}
 		fptr(stack, count);
@@ -43,6 +45,7 @@ void get_input(stack_t **stack, char *filename)
 	free(glob_vars->buffer);
 
 	if (fclose(glob_vars->file) == -1)
+		cleanupGlobals();
 		exit(-1);
 }
 
