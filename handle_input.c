@@ -25,7 +25,6 @@ void get_input(stack_t **stack, char *filename)
 	while (getline(&glob_vars.buffer, &n, glob_vars.file) != -1)
 	{
 		input = line_split(glob_vars.buffer, count);
-		printf("This is the input %s", input);
 		if (input == NULL || input[0] == '#')
 		{
 			count++;
@@ -75,6 +74,7 @@ char *line_split(char *input, int count)
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", count);
 			free(glob_vars.buffer);
+			fclose(glob_vars.file);
 			exit(EXIT_FAILURE);
 		}
 	}
